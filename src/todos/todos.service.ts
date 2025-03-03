@@ -14,7 +14,7 @@ export class TodosService {
     return this.todosRepository.find();
   }
 
-  async findOne(id: number): Promise<Todo> {
+  async findOne(id: number): Promise<Todo | null> {
     const todo = await this.todosRepository.findOne({ where: { id } });
     if (!todo) {
       throw new Error('Todo not found');
@@ -27,7 +27,7 @@ export class TodosService {
     return this.todosRepository.save(newtodo);
   }
 
-  async update(id: number, todo: Partial<Todo>): Promise<Todo> {
+  async update(id: number, todo: Partial<Todo>): Promise<Todo | null> {
     await this.todosRepository.update({ id }, todo);
     const updatedTodo = await this.todosRepository.findOne({ where: { id } });
     if (!updatedTodo) {
@@ -36,7 +36,7 @@ export class TodosService {
     return updatedTodo;
   }
 
-  async delete(id: number): Promise<void> {
+  async delete(id: number): Promise<void | null> {
     await this.todosRepository.delete({ id });
   }
 }
